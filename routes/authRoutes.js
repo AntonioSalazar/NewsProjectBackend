@@ -24,3 +24,5 @@ authRoutes.post("/signup", (req, res, next) => {
   })
   .catch(err => next(res.json(err)))
 })
+
+module.export = authRoutes;

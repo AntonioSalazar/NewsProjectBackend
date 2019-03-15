@@ -8,6 +8,8 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const User         = require("./models/user")
+const bcrypt       = require("bcrypt")
 
 
 mongoose

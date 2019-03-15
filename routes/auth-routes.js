@@ -12,7 +12,7 @@ authRoutes.post("/signup", (req, res, next ) =>{
 
   if (username == "" || password == "" || email == "") {
     res.json( {
-      message: "Debes indicar los datos solicitados para poder continuar ☝😌"
+      message: "Debes indicar los datos solicitados para poder continuar ☝🌝"
     })
     return
   }

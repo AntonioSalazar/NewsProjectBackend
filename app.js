@@ -56,8 +56,12 @@ passport.deserializeUser((id, cb) => {
   });
 });
 app.use(flash());
-passport.use(new LocalStrategy(( email, password, next) => {
-  User.findOne( {email} , (err, user) => {
+
+passport.use(new LocalStrategy({
+  usernameField: "email",
+  passwordField: "password"
+},( email, password, next) => {
+  User.findOne({ email }, (err, user) => {
     if (err) {
       return next(err);
     }
@@ -67,7 +71,6 @@ passport.use(new LocalStrategy(( email, password, next) => {
     if (!bcrypt.compareSync(password, user.password)) {
       return next(null, false, { message: "Contraseña incorrecta" });
     }
-
     return next(null, user);
   });
 }));

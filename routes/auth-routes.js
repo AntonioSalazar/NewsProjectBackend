@@ -39,7 +39,7 @@ authRoutes.post("/signup", (req, res, next ) =>{
       res.json({
         createdUser
       });
-      res.redirect("/")  //check if this works, after authorizing the user it should redirect to home page
+      // res.redirect("/")  //check if this works, after authorizing the user it should redirect to home page
     })
     .catch(error => {
       next(res.json(error));
@@ -51,19 +51,20 @@ authRoutes.post("/signup", (req, res, next ) =>{
   })
 })
 
-authRoutes.post("/login", passport.authenticate("local", {
-  successRedirect: "/",
-  failureFlash: true,
-  passReqToCallback: true
-}), (req, res) => {
-  res.json({
-    message: "logged in!"
-  })
-})
+authRoutes.post('/login',
+  passport.authenticate('local'),
+  function(req, res) {
+    res.json({
+      message: "logged in"
+    });
+  }
+);
 
 authRoutes.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/login");
+  res.json({
+    message: "user logged out"
+  });
 });
 
 module.exports = authRoutes;

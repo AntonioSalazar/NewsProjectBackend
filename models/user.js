@@ -12,13 +12,16 @@ const userSchema = new Schema({
   },
   imgName: String,
   imgPath: {
-    type: "String",
+    type: String,
     default: "../images/user_icon.png"
   },
-  timestamps: {
-    createdAt: "created_at", 
-    updatedAt: "updated_at"
+  description: String,
+}, 
+{
+  timestamps: { 
+    createdAt: "created_at", updatedAt: "updated_at" 
   }
 })
 
 const User = mongoose.model("User", userSchema)
+module.exports = User;

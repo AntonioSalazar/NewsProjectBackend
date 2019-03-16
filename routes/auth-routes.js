@@ -3,6 +3,7 @@ const authRoutes      = express.Router();
 const bcrypt          = require("bcrypt");
 const bcryptSalt      = 10 ;
 const User            = require("../models/user");
+const passport        = require("passport")
 
 
 authRoutes.post("/signup", (req, res, next ) =>{
@@ -31,15 +32,17 @@ authRoutes.post("/signup", (req, res, next ) =>{
 
     User.create({
       username,
+      email,
       password: hashPass
     })
     .then((createdUser) => {
       res.json({
         createdUser
       });
+      res.redirect("/")  //check if this works, after authorizing the user it should redirect to home page
     })
     .catch(error => {
-      console.log(error);
+      next(res.json(error));
     })
 
   })
@@ -47,5 +50,20 @@ authRoutes.post("/signup", (req, res, next ) =>{
     next(error)
   })
 })
+
+authRoutes.post("/login", passport.authenticate("local", {
+  successRedirect: "/",
+  failureFlash: true,
+  passReqToCallback: true
+}), (req, res) => {
+  res.json({
+    message: "logged in!"
+  })
+})
+
+authRoutes.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/login");
+});
 
 module.exports = authRoutes;

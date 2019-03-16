@@ -37,7 +37,8 @@ authRoutes.post("/signup", (req, res, next ) =>{
     })
     .then((createdUser) => {
       res.json({
-        createdUser
+        createdUser,
+        message: "User created"
       });
       // res.redirect("/")  //check if this works, after authorizing the user it should redirect to home page
     })

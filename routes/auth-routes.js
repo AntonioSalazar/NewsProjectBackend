@@ -7,9 +7,7 @@ const passport        = require("passport")
 
 
 authRoutes.post("/signup", (req, res, next ) =>{
-  const username = req.body.username;
-  const email    = req.body.email;
-  const password = req.body.password;
+  const {username, email, password} = req.body;
 
   if (username == "" || password == "" || email == "") {
     res.json( {

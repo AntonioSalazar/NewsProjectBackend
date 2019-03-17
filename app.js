@@ -14,7 +14,8 @@ const session         = require("express-session");
 const passport        = require("passport")
 const LocalStrategy   = require("passport-local").Strategy;
 const MongoStore      = require("connect-mongo")(session);
-const flash           = require("connect-flash")
+const flash           = require("connect-flash");
+const multer          = require("multer")
 
 mongoose
   .connect('mongodb://localhost/newsprojectbackend', {useNewUrlParser: true})
@@ -75,8 +76,10 @@ passport.use(new LocalStrategy({
   });
 }));
 
+
 app.use(passport.initialize());
 app.use(passport.session())
+
 
 // Express View engine setup
 

@@ -8,14 +8,15 @@ const hbs             = require('hbs');
 const mongoose        = require('mongoose');
 const logger          = require('morgan');
 const path            = require('path');
-const User            = require("./models/user");
-const bcrypt          = require("bcrypt");
-const session         = require("express-session");
-const passport        = require("passport")
-const LocalStrategy   = require("passport-local").Strategy;
-const MongoStore      = require("connect-mongo")(session);
-const flash           = require("connect-flash");
-const multer          = require("multer")
+const User            = require('./models/user');
+const bcrypt          = require('bcrypt');
+const session         = require('express-session');
+const passport        = require('passport')
+const LocalStrategy   = require('passport-local').Strategy;
+const MongoStore      = require('connect-mongo')(session);
+const flash           = require('connect-flash');
+const multer          = require('multer');
+const compareSync     = require('cors');
 
 mongoose
   .connect('mongodb://localhost/newsprojectbackend', {useNewUrlParser: true})
@@ -95,7 +96,10 @@ app.set('view engine', 'hbs'); //can remove this
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-
+app.use(cors({
+  credentials: true,
+  origin: [process.env.CORS_ORIGIN]
+}));
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';

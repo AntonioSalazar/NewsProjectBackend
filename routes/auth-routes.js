@@ -56,18 +56,29 @@ authRoutes.post("/signup", (req, res, next ) =>{
       });
     });    
   }) 
-
-
 })
 
-authRoutes.post('/login',
-  passport.authenticate('local'),
-  function(req, res) {
-    res.json({
-      message: "logged in"
-    });
-  }
-);
+
+authRoutes.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, theUser, failureDetails) => {
+      if (err) {
+          res.status(500).json({ message: 'Algo salio mal al momento de autenticar al usurio' });
+          return;
+      }
+      if (!theUser) {
+          // "failureDetails" contains the error messages
+          res.status(401).json(failureDetails);
+          return;
+      }
+      req.login(theUser, (err) => {
+          if (err) {
+              res.status(500).json({ message: 'No se pudo  salvar la sesion'});
+              return;re
+          }
+          res.status(200).json(theUser);
+      });
+  })(req, res, next);
+});
 
 authRoutes.get("/logout", (req, res) => {
   req.logout();

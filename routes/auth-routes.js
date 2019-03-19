@@ -16,38 +16,48 @@ authRoutes.post("/signup", (req, res, next ) =>{
     return
   }
 
-  User.findOne({username})
-  .then(user =>{
-    if(user != null){
-      res.json({
-        message: "El usuario ingresado Ya existe! 😬"
-      }) 
-      return
+  if(password.length < 7){
+    res.status(400).json({ message: 'Tu contraseña debe ser de al menos 8 caracteres' });
+    return;
+}
+
+  User.findOne({email}, (err, foundUser) => {
+    if(err){
+      res.status(500).json({message: "No pudimos revisar tu usuario"})
+      return;
+    }
+
+    if(foundUser){
+      res.status(400).json({message: "El usuario ingresado ya existe"})
+      return;
     }
 
     const salt = bcrypt.genSaltSync(bcryptSalt);
     const hashPass = bcrypt.hashSync(password, salt);
 
-    User.create({
+    const newUser = new User({
       username,
       email,
       password: hashPass
     })
-    .then((createdUser) => {
-      res.json({
-        createdUser,
-        message: "User created"
-      });
-      // res.redirect("/")  //check if this works, after authorizing the user it should redirect to home page
-    })
-    .catch(error => {
-      next(res.json(error));
-    })
 
-  })
-  .catch(error =>{
-    next(error)
-  })
+    newUser.save(err => {
+      if (err) {
+          res.status(400).json({ message: 'No pudimos salvar el usuario en la base de datos.' });
+          return;
+      }
+
+      req.login(newUser, (err) => {
+          if (err) {
+              res.status(500).json({ message: 'No se pudo loggear despues del signup' });
+              return;
+          }           
+          res.status(200).json(newUser);
+      });
+    });    
+  }) 
+
+
 })
 
 authRoutes.post('/login',

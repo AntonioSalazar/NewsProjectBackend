@@ -4,11 +4,15 @@ const User    = require("../models/user");
 const newsIndepentArticle = require("../models/newsIndependent");
 const uploadCloud = require("../config/cloudinary");
 
+
+
 router.post('/add_article', uploadCloud.single("photo"),(req, res, next) => {
-  const {author, newsContent} = req.body
+  const {author, newsDescription, newsTitle, location } = req.body
   newsIndepentArticle.create({
     author ,
-    newsContent ,
+    newsTitle ,
+    newsDescription,
+    location,
     imgName : req.file.originalname,
     imgPath : req.file.url
   })

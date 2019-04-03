@@ -16,6 +16,7 @@ const MongoStore      = require('connect-mongo')(session);
 const flash           = require('connect-flash');
 const multer          = require('multer');
 const cors            = require('cors');
+const socketio        = require('socket.io')
 
 require("./config/passport")
 
@@ -32,6 +33,7 @@ const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
 
 const app = express();
+
 
 // Middleware Setup
 app.use(logger('dev'));
@@ -73,7 +75,7 @@ app.use(passport.session())
 
 app.use(cors({
   credentials: true,
-  origin: ['process.env.CORS_ORIGIN']
+  origin: ['http://localhost:3000']
 }));
 
 // default value for title local

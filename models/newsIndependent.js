@@ -11,6 +11,7 @@ const newsIndepentArticleSchema = new Schema({
   },
   newsTitle: String,
   newsDescription: String,
+  newsContent: String,
   location: String
  }, {
     timestamps: { 

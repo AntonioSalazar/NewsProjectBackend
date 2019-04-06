@@ -14,9 +14,7 @@ const passport        = require('passport')
 const LocalStrategy   = require('passport-local').Strategy;
 const MongoStore      = require('connect-mongo')(session);
 const flash           = require('connect-flash');
-const multer          = require('multer');
 const cors            = require('cors');
-const socketio        = require('socket.io')
 
 require("./config/passport")
 

@@ -7,9 +7,9 @@ const uploadCloud = require("../config/cloudinary");
 
 
 router.post('/add_article', uploadCloud.single("photo"),(req, res, next) => {
-  const {author, newsDescription, newsTitle, newsContent, location } = req.body
+  const { newsDescription, newsTitle, newsContent, location } = req.body
   newsIndepentArticle.create({
-    author ,
+     
     newsTitle ,
     newsDescription,
     newsContent,
@@ -20,7 +20,9 @@ router.post('/add_article', uploadCloud.single("photo"),(req, res, next) => {
   .then(newArticle => {
     res.status(200).json({
       newArticle,
-      message: "article uploaded"
+      message: "article uploaded",
+      pictureUrl: req.file.url,
+      pictureName: req.file.originalname
     })
   })
   .catch( err => next(res.status(400).json(err)))

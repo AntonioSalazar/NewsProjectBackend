@@ -6,26 +6,28 @@ const uploadCloud = require("../config/cloudinary");
 
 
 
-router.post('/add_article', uploadCloud.single("photo"),(req, res, next) => {
-  const { newsDescription, newsTitle, newsContent, location } = req.body
+router.post('/add_article',(req, res, next) => {
+  const { newsDescription, newsTitle, newsContent, location, imgName, imgPath } = req.body
   newsIndepentArticle.create({
     newsTitle ,
     newsDescription,
     newsContent,
     location,
-    imgName : req.file.name,
-    imgPath : req.file.url
+    imgName,
+    imgPath
   })
   .then(newArticle => {
     res.status(200).json({
       newArticle,
       message: "article uploaded",
-      pictureUrl: req.file.url,
-      pictureName: req.file.originalname
     })
   })
   .catch( err => next(res.status(400).json(err)))
 });
+
+router.post("/add_photo", uploadCloud.single('photo'), (req, res, next) => {
+  res.json({imgName: req.file.originalname, imgPath: req.file.url})
+})
 
 router.get("/independent_articles", (req, res, next ) => {
   newsIndepentArticle.find()

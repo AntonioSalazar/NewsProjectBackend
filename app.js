@@ -7,11 +7,8 @@ const favicon         = require('serve-favicon');
 const mongoose        = require('mongoose');
 const logger          = require('morgan');
 const path            = require('path');
-const User            = require('./models/user');
-const bcrypt          = require('bcrypt');
 const session         = require('express-session');
 const passport        = require('passport')
-const LocalStrategy   = require('passport-local').Strategy;
 const MongoStore      = require('connect-mongo')(session);
 const flash           = require('connect-flash');
 const cors            = require('cors');
@@ -38,9 +35,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-
-
 
 // Express View engine setup
 
@@ -81,9 +75,11 @@ app.locals.title = 'Express - Generated with Express Generator';
 
 
 
-const index = require('./routes/index');
+const articles = require('./routes/articles');
 const authRoutes = require("./routes/auth-routes");
-app.use('/', index);
+const users = require('./routes/user')
+app.use('/', users)
+app.use('/', articles);
 app.use("/", authRoutes);
 
 

@@ -67,8 +67,8 @@ app.use(passport.session())
 
 app.use(cors({
   credentials: true,
-  // origin: [process.env.ORIGIN_URL]
-  origin: ['http://localhost:3000']
+  origin: [process.env.ORIGIN_URL]
+  // origin: ['http://localhost:3000']
 }));
 
 // default value for title local

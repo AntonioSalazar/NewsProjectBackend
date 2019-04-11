@@ -16,7 +16,7 @@ const cors            = require('cors');
 require("./config/passport")
 
 mongoose
-  .connect(process.env.MONGO_URI, {useNewUrlParser: true})
+  .connect(process.env.MONGODB_URI, {useNewUrlParser : true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -67,18 +67,19 @@ app.use(passport.session())
 
 app.use(cors({
   credentials: true,
-  origin: ['https://newsprojectih.herokuapp.com/']
-  // origin: ['http://localhost:3000']
+  origin: [process.env.ORIGIN_URL]
 }));
 
 // default value for title local
 app.locals.title = 'Express - Generated with Express Generator';
 
-const index = require('./routes/index');
+
+
+const articles = require('./routes/articles');
 const authRoutes = require("./routes/auth-routes");
 const users = require('./routes/user')
-app.use('/', index);
 app.use('/', users)
+app.use('/', articles);
 app.use("/", authRoutes);
 
 

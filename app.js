@@ -16,7 +16,7 @@ const cors            = require('cors');
 require("./config/passport")
 
 mongoose
-  .connect('process.env.MONGODB_URI', {useNewUrlParser : true})
+  .connect('mongodb://localhost/newsprojectbackend', {useNewUrlParser : true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -75,11 +75,11 @@ app.locals.title = 'Express - Generated with Express Generator';
 
 
 
-const articles = require('./routes/articles');
+const index = require('./routes/index');
 const authRoutes = require("./routes/auth-routes");
 const users = require('./routes/user')
 app.use('/', users)
-app.use('/', articles);
+app.use('/', index);
 app.use("/", authRoutes);
 
 

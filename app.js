@@ -67,7 +67,7 @@ app.use(passport.session())
 
 app.use(cors({
   credentials: true,
-  origin: [process.env.ORIGIN_URL]
+  origin: ['https://newsprojectih.herokuapp.com/']
   // origin: ['http://localhost:3000']
 }));
 

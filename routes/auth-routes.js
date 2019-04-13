@@ -66,7 +66,6 @@ authRoutes.post('/login', (req, res, next) => {
           return;
       }
       if (!theUser) {
-          // "failureDetails" contains the error messages
           res.status(401).json(failureDetails);
           return;
       }

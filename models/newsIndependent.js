@@ -3,7 +3,6 @@ const Schema   = mongoose.Schema;
 const User     = require("./user");
 
 const newsIndepentArticleSchema = new Schema({
-  // author: String,
   imgName: String,
   imgPath: {
     type: String,
